@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    image: postgres:15.2
+    ports:
+      - '5532:5432'
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=budget_tool
+    volumes:
+      - pg_data_budget_tool:/var/lib/postgres/data
+    networks:
+      - budget_tool
+  pgAdmin:
+    restart: always
+    image: dpage/pgadmin4:7.4
+    ports:
+      - '8880:80'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=dev@docker.org
+      - PGADMIN_DEFAULT_PASSWORD=docker
+    volumes:
+      - pg_admin_budget_tool:/var/lib/pgadmin
+    networks:
+      - budget_tool
+  api:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - 3000:7080
+    environment:
+      - CONNECTION_TYPE=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_POSTGRES_USER=postgres
+      - DB_PASSWORD=docker
+      - DB_NAME=budget_tool
+      - DB_SYNCHRONIZE=false
+      - DB_PREFIX=budget
+      - SECURITY_KEY=qwerty2024
+      - REFRESH_TOKEN_EXPIRES_IN=1d
+      - PORT=3000
+#      - EMAIL_HOST=smtp.cloudmta.net
+#      - EMAIL_USER=f9848c506dea731b
+#      - EMAIL_PASSWORD=cDqTJCxV4xEaBNsQ6h1p1bbx
+#      - EMAIL_PORT=587
+#      - EMAIL_FROM='Izweb Academy<no-reply@izwebacademy.com>'
+#      - IGNORE_ENV_FILE=true
+#      - EMAIL_LOGGER=false
+    depends_on:
+      - db
+    networks:
+      - budget_tool
+
+networks:
+  budget_tool:
+
+
+volumes:
+  pg_data_budget_tool:
+  pg_admin_budget_tool:
