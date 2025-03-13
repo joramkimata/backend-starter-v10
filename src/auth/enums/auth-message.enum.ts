@@ -1,0 +1,8 @@
+
+
+export enum AuthMessages {
+    ACCESS_TOKEN_ONLY = "ACCESS_TOKEN_ONLY",
+    INVALID_LOGIN = "INVALID_LOGIN",
+    LOGGED_OUT = "LOGGED_OUT",
+    ACCESS_DENIED = "ACCESS_DENIED"
+}

@@ -6,6 +6,9 @@ import { SharedModule } from './shared/shared.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AttachmentsModule } from './attachments/attachments.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -24,7 +27,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRootAsync({
       useFactory: ormConfig,
     }),
-    SharedModule
+    SharedModule,
+    AuthModule,
+    AttachmentsModule,
+    UsersModule
   ],
   controllers: [],
   providers: [],

@@ -1,4 +1,4 @@
-version: '3'
+#version: '3'
 
 services:
   db:
@@ -9,11 +9,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=budget_tool
+      - POSTGRES_DB=rms
     volumes:
-      - pg_data_budget_tool:/var/lib/postgres/data
+      - pg_data_rms:/var/lib/postgres/data
     networks:
-      - budget_tool
+      - rms
   pgAdmin:
     restart: always
     image: dpage/pgadmin4:7.4
@@ -23,9 +23,9 @@ services:
       - PGADMIN_DEFAULT_EMAIL=dev@docker.org
       - PGADMIN_DEFAULT_PASSWORD=docker
     volumes:
-      - pg_admin_budget_tool:/var/lib/pgadmin
+      - pg_admin_rms:/var/lib/pgadmin
     networks:
-      - budget_tool
+      - rms
   api:
     restart: always
     build:
@@ -39,7 +39,7 @@ services:
       - DB_PORT=5432
       - DB_POSTGRES_USER=postgres
       - DB_PASSWORD=docker
-      - DB_NAME=budget_tool
+      - DB_NAME=rms
       - DB_SYNCHRONIZE=false
       - DB_PREFIX=budget
       - SECURITY_KEY=qwerty2024
@@ -55,12 +55,12 @@ services:
     depends_on:
       - db
     networks:
-      - budget_tool
+      - rms
 
 networks:
-  budget_tool:
+  rms:
 
 
 volumes:
-  pg_data_budget_tool:
-  pg_admin_budget_tool:
+  pg_data_rms:
+  pg_admin_rms:

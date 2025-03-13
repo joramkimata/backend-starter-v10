@@ -10,4 +10,7 @@ export class PaginatedInput {
   @Field(() => Int, { defaultValue: 10 })
   pageSize: number;
 
+  @Field(() => String, { nullable: true })
+  searchTerm?: string;
+
 }
