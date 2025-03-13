@@ -9,11 +9,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=rms
+      - POSTGRES_DB=v10
     volumes:
-      - pg_data_rms:/var/lib/postgres/data
+      - pg_data_v10:/var/lib/postgres/data
     networks:
-      - rms
+      - v10
   pgAdmin:
     restart: always
     image: dpage/pgadmin4:7.4
@@ -23,9 +23,9 @@ services:
       - PGADMIN_DEFAULT_EMAIL=dev@docker.org
       - PGADMIN_DEFAULT_PASSWORD=docker
     volumes:
-      - pg_admin_rms:/var/lib/pgadmin
+      - pg_admin_v10:/var/lib/pgadmin
     networks:
-      - rms
+      - v10
   api:
     restart: always
     build:
@@ -39,7 +39,7 @@ services:
       - DB_PORT=5432
       - DB_POSTGRES_USER=postgres
       - DB_PASSWORD=docker
-      - DB_NAME=rms
+      - DB_NAME=v10
       - DB_SYNCHRONIZE=false
       - DB_PREFIX=budget
       - SECURITY_KEY=qwerty2024
@@ -55,12 +55,12 @@ services:
     depends_on:
       - db
     networks:
-      - rms
+      - v10
 
 networks:
-  rms:
+  v10:
 
 
 volumes:
-  pg_data_rms:
-  pg_admin_rms:
+  pg_data_v10:
+  pg_admin_v10:
